@@ -15,3 +15,8 @@ trainData <- cbind(trainActivity,trainSubjects,trainData)
 testData <- cbind(testActivity,testSubjects,testData)
 combData <- rbind(trainData,testData)
 combData <- merge(labels,combData,by = "activityCode", all = TRUE)
+newData <- combData[,c(1:3,grep(".mean[.]|.std",colnames(combData)))]
+byactivity <- group_by(newData,activityName)
+meanbyactivity <- summarize_each(byactivity[,-c(1,3)],funs(mean))
+bysubject <- group_by(newData,subject)
+meanbysubject <- summarize_each(bysubject[,-c(1,2)],funs(mean))
