@@ -15,7 +15,7 @@ trainData <- cbind(trainActivity,trainSubjects,trainMeasurments)
 testData <- cbind(testActivity,testSubjects,testMeasurments)
 combData <- rbind(trainData,testData)
 combData <- merge(labels,combData,by = "activityCode", all = TRUE)
-newData <- combData[,c(2:3,grep(".mean[.]|.std",colnames(combData)))]
+newData <- combData[,c(2,3,grep(".mean[.]|.std",colnames(combData)))]
 meanbyactivitysubject <- newData %>% group_by(activityName,subject) %>% summarize_each(funs(mean))
-
+write.table(meanbyactivitysubject, file = "meanby_Activity_Subject.txt",row.name=FALSE)
 
